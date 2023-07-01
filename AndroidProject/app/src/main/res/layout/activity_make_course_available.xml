@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MakeCourseAvailable">
+
+    <EditText
+        android:id="@+id/instructor_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Instructor Name" />
+
+    <EditText
+        android:id="@+id/venue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Venue" />
+
+    <Spinner
+        android:id="@+id/course_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/registration_deadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Registration Deadline" />
+
+    <Button
+        android:id="@+id/start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Course Start Date" />
+
+    <Button
+        android:id="@+id/btn_make_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done" />
+
+</LinearLayout>
