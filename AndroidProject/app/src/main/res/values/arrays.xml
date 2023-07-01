@@ -1,6 +1,0 @@
-<resources>
-    <string-array name="course_schedule_array">
-        <item>Monday Wednesday</item>
-        <item>Tuesday Thursday</item>
-    </string-array>
-</resources>
