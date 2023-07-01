@@ -31,8 +31,11 @@ public class StudentActivity extends AppCompatActivity {
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence channelName = MY_CHANNEL_ID;
+            String channelDescription = MY_CHANNEL_NAME;
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID, MY_CHANNEL_NAME, importance);
+            NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID, channelName, importance);
+            channel.setDescription(channelDescription);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -84,6 +87,7 @@ public class StudentActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.pr_courses);
 
+        notificationManager = NotificationManagerCompat.from(this);
         createNotificationChannel();
 
         notifications = databaseHelper.getNotificationsForStudent(email);

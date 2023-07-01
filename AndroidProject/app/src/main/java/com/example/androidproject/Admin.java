@@ -68,4 +68,8 @@ public class Admin {
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
+
+    public String getFullName(){
+        return this.firstName + " " + this.lastName;
+    }
 }

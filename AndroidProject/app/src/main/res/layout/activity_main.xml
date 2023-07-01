@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/birzeit" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:padding="10dp">
+
+
 
     <EditText
         android:id="@+id/emailInput"
@@ -33,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rememberMe"
         android:text="@string/login"
-        android:background="@color/colorAccent"
+        android:background="@color/dark_green"
         android:textColor="@android:color/white"/>
     <Button
         android:id="@+id/signupButton"
@@ -42,6 +57,7 @@
         android:layout_below="@id/loginButton"
         android:layout_marginTop="10dp"
         android:text="@string/sign_up"
-        android:background="@color/colorAccent"
+        android:background="@color/dark_green"
         android:textColor="@android:color/white"/>
 </RelativeLayout>
+</FrameLayout>

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.loginButton);
         checkBoxRememberMe = findViewById(R.id.rememberMe);
         signupButton = findViewById(R.id.signupButton);
+
+        int darkGreen = ContextCompat.getColor(this, R.color.dark_green);
+
+        buttonLogin.setBackgroundColor(darkGreen);
+        signupButton.setBackgroundColor(darkGreen);
 
         sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         databaseHelper = new DatabaseHelper(this);
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (userType) {
                     case 1: // Admin
                         intent = new Intent(MainActivity.this, AdminActivity.class);
-                        intent.putExtra("first_name", email.split("\\.")[0]);
+                        intent.putExtra("email", email);
                         break;
                     case 2: // Student
                         intent = new Intent(MainActivity.this, InstructorActivity.class);

@@ -59,9 +59,10 @@ public class MakeCourseAvailable extends AppCompatActivity {
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year1, monthOfYear, dayOfMonth) -> button.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1), year, month, day);
+                (view, year1, monthOfYear, dayOfMonth) -> button.setText(year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth), year, month, day);
         datePickerDialog.show();
     }
+
 
     private void makeCourseAvailable(Course course) {
         String instructorName = mInstructorName.getText().toString().trim();
@@ -97,7 +98,7 @@ public class MakeCourseAvailable extends AppCompatActivity {
         }
 
         // Check if the selected dates are in the past
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             Date selectedDate = sdf.parse(startDate);
             Date currentDate = new Date();

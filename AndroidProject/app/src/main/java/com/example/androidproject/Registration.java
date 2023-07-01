@@ -2,14 +2,14 @@ package com.example.androidproject;
 
 public class Registration {
     private int id;
-    private int courseOfferingId;
-    private int traineeId;
+    private String courseOfferingId;
+    private String traineeId;
     private int status;
 
     public Registration() {
     }
 
-    public Registration(int id, int courseOfferingId, int traineeId, int status) {
+    public Registration(int id, String courseOfferingId, String traineeId, int status) {
         this.id = id;
         this.courseOfferingId = courseOfferingId;
         this.traineeId = traineeId;
@@ -24,19 +24,19 @@ public class Registration {
         this.id = id;
     }
 
-    public int getCourseOfferingId() {
+    public String getCourseId() {
         return courseOfferingId;
     }
 
-    public void setCourseOfferingId(int courseOfferingId) {
+    public void setCourseId(String courseOfferingId) {
         this.courseOfferingId = courseOfferingId;
     }
 
-    public int getTraineeId() {
+    public String getStudentEmail() {
         return traineeId;
     }
 
-    public void setTraineeId(int traineeId) {
+    public void setStudentEmail(String traineeId) {
         this.traineeId = traineeId;
     }
 

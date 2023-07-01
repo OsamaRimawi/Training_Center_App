@@ -317,12 +317,37 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Cursor getAdmin(String email) {
+    public Admin getAdmin(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM Admins WHERE email=?";
-        Cursor cursor = db.rawQuery(query, new String[]{email});
-        return cursor;
+
+        Cursor cursor = db.query("Admins", // The table to query
+                new String[]{"email", "first_name", "last_name", "password_hash", "photo", "user_type"}, // The columns to return
+                "email = ?", // The columns for the WHERE clause
+                new String[]{email}, // The values for the WHERE clause
+                null, // Don't group the rows
+                null, // Don't filter by row groups
+                null); // Don't order the rows
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        if (cursor.getCount() > 0) {
+            Admin admin = new Admin();
+            admin.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+            admin.setFirstName(cursor.getString(cursor.getColumnIndexOrThrow("first_name")));
+            admin.setLastName(cursor.getString(cursor.getColumnIndexOrThrow("last_name")));
+            admin.setPhoto(cursor.getBlob(cursor.getColumnIndexOrThrow("photo")));
+            admin.setUserType(cursor.getInt(cursor.getColumnIndexOrThrow("user_type")));
+
+            cursor.close();
+            return admin;
+        } else {
+            cursor.close();
+            return null;
+        }
     }
+
+
 
     public Cursor getAllAdmins() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -348,7 +373,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != 0;
     }
-
     public boolean insertInstructor(Instructor instructor) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -436,13 +460,6 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return null; // Return null if the instructor is not found or the column doesn't exist
     }
 
-    public Cursor getAllInstructors() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM Instructors";
-        Cursor cursor = db.rawQuery(query, null);
-        return cursor;
-    }
-
     public boolean updateInstructor(Instructor instructor) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -461,8 +478,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != 0;
     }
-
-
+    
     public boolean updateStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -530,6 +546,30 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return course;
     }
+
+    public AvailableCourse getAvailableCourse(String courseId) {
+        AvailableCourse availableCourse = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM AvailableCourses WHERE course_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{courseId});
+
+        if (cursor.moveToFirst()) {
+            String instructorEmail = cursor.getString(cursor.getColumnIndexOrThrow("instructor_email"));
+            String registrationDeadline = cursor.getString(cursor.getColumnIndexOrThrow("registration_deadline"));
+            String startDate = cursor.getString(cursor.getColumnIndexOrThrow("start_date"));
+            String schedule = cursor.getString(cursor.getColumnIndexOrThrow("schedule"));
+            String venue = cursor.getString(cursor.getColumnIndexOrThrow("venue"));
+
+            availableCourse = new AvailableCourse(courseId, instructorEmail, registrationDeadline, startDate, schedule, venue);
+        }
+
+        cursor.close();
+        db.close();
+
+        return availableCourse;
+    }
+
 
     public ArrayList<Course> getAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
@@ -792,6 +832,35 @@ class DatabaseHelper extends SQLiteOpenHelper {
         db.insert("AvailableCourses", null, values);
         db.close();
     }
+
+    public List<AvailableCourse> getAllAllAvailableCourses() {
+        List<AvailableCourse> availableCourses = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM AvailableCourses";
+        Cursor cursor = db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            AvailableCourse availableCourse = new AvailableCourse();
+
+            availableCourse.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            availableCourse.setCourseId(cursor.getString(cursor.getColumnIndexOrThrow("course_id")));
+            availableCourse.setInstructorEmail(cursor.getString(cursor.getColumnIndexOrThrow("instructor_email")));
+            availableCourse.setRegistrationDeadline(cursor.getString(cursor.getColumnIndexOrThrow("registration_deadline")));
+            availableCourse.setStartDate(cursor.getString(cursor.getColumnIndexOrThrow("start_date")));
+            availableCourse.setSchedule(cursor.getString(cursor.getColumnIndexOrThrow("schedule")));
+            availableCourse.setVenue(cursor.getString(cursor.getColumnIndexOrThrow("venue")));
+
+            availableCourses.add(availableCourse);
+        }
+
+        cursor.close();
+        db.close();
+
+        return availableCourses;
+    }
+
 
     public CourseOffering getCourseOffering(String courseId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1149,6 +1218,33 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public List<Registration> getAllAllRegistrations() {
+        List<Registration> registrations = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM Registrations";
+        Cursor cursor = db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            String courseId = cursor.getString(cursor.getColumnIndexOrThrow("course_id"));
+            String studentEmail = cursor.getString(cursor.getColumnIndexOrThrow("student_email"));
+            int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+
+            Registration registration = new Registration();
+            registration.setCourseId(courseId);
+            registration.setStudentEmail(studentEmail);
+            registration.setStatus(status);
+
+            registrations.add(registration);
+        }
+
+        cursor.close();
+        db.close();
+
+        return registrations;
+    }
+
+
+
     public Cursor getRegistration(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM Registrations WHERE id=?";
@@ -1162,6 +1258,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{student_email});
         return cursor;
     }
+
 
     public boolean updateRegistration(int id, int course_id, String student_email) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1501,4 +1598,176 @@ class DatabaseHelper extends SQLiteOpenHelper {
         Date currentDate = new Date();
         return dateFormat.format(currentDate);
     }
+
+    public List<Student> getStudentsRegisteredInCourse(String courseId) {
+        // Create a list to store the students
+        List<Student> students = new ArrayList<>();
+
+        // Create a SQLite database connection
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define the SQL query
+        String query = "SELECT * FROM Students WHERE email IN (SELECT student_email FROM Registrations WHERE course_id = ?)";
+
+        // Execute the query
+        Cursor cursor = db.rawQuery(query, new String[]{courseId});
+
+        // Loop through the results
+        while (cursor.moveToNext()) {
+            // Extract the data
+            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            String firstName = cursor.getString(cursor.getColumnIndexOrThrow("first_name"));
+            String lastName = cursor.getString(cursor.getColumnIndexOrThrow("last_name"));
+            String passwordHash = cursor.getString(cursor.getColumnIndexOrThrow("password_hash"));
+            byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow("photo"));
+            String mobileNumber = cursor.getString(cursor.getColumnIndexOrThrow("mobile_number"));
+            String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+            int userType = cursor.getInt(cursor.getColumnIndexOrThrow("user_type"));
+
+            // Create a new student object
+            Student student = new Student(email, firstName, lastName, passwordHash, photo, mobileNumber, address);
+
+            // Add the student to the list
+            students.add(student);
+        }
+
+        // Close the database connection
+        cursor.close();
+        db.close();
+
+        // Return the list of students
+        return students;
+    }
+
+    public List<Student> getAllStudents() {
+        List<Student> studentsList = new ArrayList<>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM Students";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                String firstName = cursor.getString(cursor.getColumnIndexOrThrow("first_name"));
+                String lastName = cursor.getString(cursor.getColumnIndexOrThrow("last_name"));
+                String passwordHash = cursor.getString(cursor.getColumnIndexOrThrow("password_hash"));
+                byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow("photo"));
+                String mobileNumber = cursor.getString(cursor.getColumnIndexOrThrow("mobile_number"));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+                int userType = cursor.getInt(cursor.getColumnIndexOrThrow("user_type"));
+
+                Student student = new Student(email, firstName, lastName, passwordHash, photo, mobileNumber, address);
+                studentsList.add(student);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return studentsList;
+    }
+
+    public List<Instructor> getAllInstructors() {
+        List<Instructor> instructorsList = new ArrayList<>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM Instructors";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                String firstName = cursor.getString(cursor.getColumnIndexOrThrow("first_name"));
+                String lastName = cursor.getString(cursor.getColumnIndexOrThrow("last_name"));
+                String passwordHash = cursor.getString(cursor.getColumnIndexOrThrow("password_hash"));
+                byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow("photo"));
+                String mobileNumber = cursor.getString(cursor.getColumnIndexOrThrow("mobile_number"));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+                String specialization = cursor.getString(cursor.getColumnIndexOrThrow("specialization"));
+                String degree = cursor.getString(cursor.getColumnIndexOrThrow("degree"));
+                int userType = cursor.getInt(cursor.getColumnIndexOrThrow("user_type"));
+
+                String coursesString = cursor.getString(cursor.getColumnIndexOrThrow("courses"));
+                List<String> courses = Arrays.asList(coursesString.split(",\\s*"));
+
+                Instructor instructor = new Instructor(email, firstName, lastName, passwordHash, photo, mobileNumber, address, specialization, degree, courses);
+                instructorsList.add(instructor);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return instructorsList;
+    }
+
+    public List<PreviousOffering> getPreviousOfferings(Course course) {
+        List<PreviousOffering> offerings = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT Courses.title, AvailableCourses.start_date, " +
+                "AvailableCourses.schedule, COUNT(Registrations.id) AS number_of_students, " +
+                "AvailableCourses.venue, Instructors.first_name, Instructors.last_name " +
+                "FROM AvailableCourses " +
+                "INNER JOIN Courses ON AvailableCourses.course_id = Courses.id " +
+                "INNER JOIN Instructors ON AvailableCourses.instructor_email = Instructors.email " +
+                "LEFT JOIN Registrations ON AvailableCourses.course_id = Registrations.course_id " +
+                "WHERE AvailableCourses.course_id = ? " +
+                "GROUP BY AvailableCourses.id";
+
+        Cursor cursor = db.rawQuery(query, new String[]{course.getId()});
+        if (cursor.moveToFirst()) {
+            do {
+                PreviousOffering offering = new PreviousOffering();
+                offering.setCourseTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
+                offering.setDate(cursor.getString(cursor.getColumnIndexOrThrow("start_date")));
+                offering.setTime(cursor.getString(cursor.getColumnIndexOrThrow("schedule")));
+                offering.setNumberOfStudents(cursor.getInt(cursor.getColumnIndexOrThrow("number_of_students")));
+                offering.setVenue(cursor.getString(cursor.getColumnIndexOrThrow("venue")));
+                offering.setInstructorName(cursor.getString(cursor.getColumnIndexOrThrow("first_name")) + " " +
+                        cursor.getString(cursor.getColumnIndexOrThrow("last_name")));
+
+                offerings.add(offering);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return offerings;
+    }
+
+
+    public List<Course> getEndedCourses() {
+        List<Course> courses = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        Log.d("salam: ", currentDate);
+        String query = "SELECT * FROM AvailableCourses " +
+                "INNER JOIN Courses ON AvailableCourses.course_id = Courses.id " +
+                "WHERE AvailableCourses.registration_deadline <=?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{currentDate});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Course course = new Course(); // Assuming you have a Course class
+                course.setId(cursor.getString(cursor.getColumnIndexOrThrow("id")));
+                course.setTitle(cursor.getString(cursor.getColumnIndexOrThrow("title")));
+                // Add other fields as needed
+                courses.add(course);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return courses;
+    }
+
+
+
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
         this.databaseHelper = databaseHelper;
     }
 
-    public static class ApplicationViewHolder extends RecyclerView.ViewHolder {
+    public class ApplicationViewHolder extends RecyclerView.ViewHolder {
         TextView studentName;
         TextView courseName;
         Button acceptButton;
@@ -34,6 +35,10 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
             courseName = v.findViewById(R.id.course_name);
             acceptButton = v.findViewById(R.id.accept_button);
             rejectButton = v.findViewById(R.id.reject_button);
+            int darkGreen = ContextCompat.getColor(context, R.color.dark_green);
+
+            acceptButton.setBackgroundColor(darkGreen);
+            rejectButton.setBackgroundColor(darkGreen);
         }
     }
 

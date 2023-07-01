@@ -90,5 +90,9 @@ public class Student {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getName() {
+        return this.firstName + " " + this.lastName;
+    }
 }
 
