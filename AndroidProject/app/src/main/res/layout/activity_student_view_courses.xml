@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Courses History"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupViewMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTitle"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/radioButtonAllCourses">
+
+        <RadioButton
+            android:id="@+id/radioButtonAllCourses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Courses" />
+
+        <RadioButton
+            android:id="@+id/radioButtonStudentCourses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Courses" />
+
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pr_courses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroupViewMode"
+        android:layout_above="@+id/btn_my_applications"
+        android:padding="16dp"
+        android:clipToPadding="false"/>
+
+    <Button
+        android:id="@+id/btn_my_applications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Applications"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/student_nav_menu" />
+
+</RelativeLayout>

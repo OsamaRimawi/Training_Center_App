@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_course_photo_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="?attr/actionBarDivider" />
+
+    <EditText
+        android:id="@+id/et_course_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Title"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_course_topics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Topics"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_course_prerequisites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Prerequisites"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_select_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Photo"/>
+
+    <Button
+        android:id="@+id/btn_update_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Course"/>
+
+</LinearLayout>

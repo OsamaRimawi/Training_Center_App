@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.androidproject">
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/squareapp"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AndroidProject"
+        tools:targetApi="31">
+        <activity
+            android:name=".StudentApplyForCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentApplicationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentSearchCoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentViewCoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CourseStudentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstructorCoursesStudentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewInstructorScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewPreviousCoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstructorEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstructorSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InstructorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserTypeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ApplicationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakeCourseAvailable"
+            android:exported="false" />
+        <activity
+            android:name=".EditCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CourseInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageCoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
