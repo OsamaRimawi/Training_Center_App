@@ -2,6 +2,7 @@ package com.example.androidproject;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -13,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
@@ -41,9 +44,7 @@ public class AdminActivity extends AppCompatActivity {
 
         tvWelcome = findViewById(R.id.textview);
         String email = getIntent().getStringExtra("email");
-        Log.d("email: ", email);
         Admin admin = databaseHelper.getAdmin(email);
-        Log.d("email: ", admin.getEmail());
         tvWelcome.setText("Welcome Back, " + admin.getFullName());
 
         recyclerView = findViewById(R.id.pr_courses);
@@ -85,8 +86,8 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, ManageCoursesActivity.class);
-
                 startActivity(intent);
+                new FetchCoursesTask().execute();
             }
         });
 
@@ -109,5 +110,23 @@ public class AdminActivity extends AppCompatActivity {
         });
 
     }
+
+    private class FetchCoursesTask extends AsyncTask<Void, Void, List<Pair<String, String>>> {
+        @Override
+        protected List<Pair<String, String>> doInBackground(Void... voids) {
+            List<Pair<String, String>> courseList = databaseHelper.getLastFiveCourses();
+
+
+            return courseList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Pair<String, String>> courseList) {
+            courseAdapter = new CourseAdapter(courseList);
+            recyclerView.setAdapter(courseAdapter);
+            courseAdapter.notifyDataSetChanged();
+        }
+    }
+
 }
 

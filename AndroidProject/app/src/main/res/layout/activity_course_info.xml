@@ -1,60 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".CourseInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_course_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:srcCompat="@drawable/course" />
-
-        <TextView
-            android:id="@+id/tv_course_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Course Title"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_course_topics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Main Topics"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_course_prerequisites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prerequisites"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btn_edit_course"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit" />
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp">
 
-        <Button
-            android:id="@+id/btn_delete_course"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/btn_make_available"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Make Available" />
+                <ImageView
+                    android:id="@+id/iv_course_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/course" />
+
+                <TextView
+                    android:id="@+id/tv_course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Course Title"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_course_topics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Main Topics"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_course_prerequisites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="30dp"
+                    android:text="Prerequisites"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_edit_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit" />
+
+                <Button
+                    android:id="@+id/btn_delete_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Delete" />
+
+                <Button
+                    android:id="@+id/btn_make_available"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make Available" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
+
 </ScrollView>

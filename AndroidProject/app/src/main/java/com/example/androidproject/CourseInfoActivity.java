@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class CourseInfoActivity extends AppCompatActivity {
     TextView title, mainTopics, prerequisites;
@@ -42,6 +43,11 @@ public class CourseInfoActivity extends AppCompatActivity {
         editButton = findViewById(R.id.btn_edit_course);
         deleteButton = findViewById(R.id.btn_delete_course);
         availableButton = findViewById(R.id.btn_make_available);
+        int darkGreen = ContextCompat.getColor(this, R.color.dark_green);
+
+        editButton.setBackgroundColor(darkGreen);
+        deleteButton.setBackgroundColor(darkGreen);
+        availableButton.setBackgroundColor(darkGreen);
 
         db = new DatabaseHelper(this);
 
@@ -52,9 +58,15 @@ public class CourseInfoActivity extends AppCompatActivity {
         loadData();
         // Retrieve the course from the database
         Course course = db.getCourse(courseId);
-        title.setText(course.getTitle());
-        mainTopics.setText(course.getMainTopics());
-        prerequisites.setText(course.getPrerequisites().toString());
+        title.setText("Title: "+course.getTitle());
+        mainTopics.setText("Main Topics: "+course.getMainTopics());
+        String test = course.getPrerequisites().toString().replaceAll("[\\[\\]{}()]", "");
+        if (test.isEmpty()){
+            prerequisites.setText("Prerequisites: "+ "None");
+        }else {
+            prerequisites.setText("Prerequisites: "+ test);
+        }
+
         byte[] photoData = course.getPhoto(); // Assuming course.getPhoto() returns the byte[] photo data
 
         if (photoData != null) {

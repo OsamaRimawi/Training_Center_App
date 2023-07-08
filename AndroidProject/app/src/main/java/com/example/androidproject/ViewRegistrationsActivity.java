@@ -1,6 +1,9 @@
 package com.example.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
@@ -14,16 +17,20 @@ public class ViewRegistrationsActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> courseAdapter;
 
+    private RecyclerView rvCourses;
+    CoursesAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_registrations);
 
         databaseHelper = new DatabaseHelper(this);
-        listView = findViewById(R.id.lv_courses);
+        listView=findViewById(R.id.lv_courses);
 
         List<AvailableCourse> courseList = databaseHelper.getAllAllAvailableCourses();
-        List<String> courseNames = new ArrayList<>();
+        ArrayList<String> courseNames = new ArrayList<>();
+
 
         for (AvailableCourse course : courseList) {
             courseNames.add(databaseHelper.getCourse(course.getCourseId()).getTitle());

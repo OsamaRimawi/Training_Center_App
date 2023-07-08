@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,12 +75,14 @@ public class ManageCoursesActivity extends AppCompatActivity {
         });
 
         btnAddCourse.setOnClickListener(v -> {
+            if (etCourseTitle.getText().toString().isEmpty() || etCourseTopics.getText().toString().isEmpty()) {
+                Toast.makeText(ManageCoursesActivity.this, "Please fill all the information", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             String courseTitle = etCourseTitle.getText().toString();
-            Log.e("courseTitle: ", etCourseTitle.getText().toString());
             String courseTopics = etCourseTopics.getText().toString();
-            //String coursePrerequisites = etCoursePrerequisites.getText().toString();
-            List<String> coursePrerequisites = Arrays.asList(etCoursePrerequisites.getText().toString().split(","));
+            List<String> coursePrerequisites = Arrays.asList(etCoursePrerequisites.getText().toString().replaceAll("[\\[\\]{}()]", "").split(","));
             ivCoursePhoto.setDrawingCacheEnabled(true);
             Bitmap bitmap = ivCoursePhoto.getDrawingCache();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

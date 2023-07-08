@@ -18,32 +18,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course Title"
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingBottom="20dp" />
 
     <EditText
         android:id="@+id/et_course_topics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course Topics"
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingBottom="20dp" />
 
     <EditText
         android:id="@+id/et_course_prerequisites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course Prerequisites"
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingBottom="30dp" />
 
     <Button
         android:id="@+id/btn_select_photo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Photo"/>
+        android:paddingBottom="15dp"
+        android:text="Select Photo"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btn_update_course"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Course"/>
+        android:paddingBottom="15dp"
+        android:text="Update Course"
+        android:textAlignment="center" />
 
 </LinearLayout>

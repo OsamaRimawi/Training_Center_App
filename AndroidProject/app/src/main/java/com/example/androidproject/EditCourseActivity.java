@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -36,6 +37,11 @@ public class EditCourseActivity extends AppCompatActivity {
         btnUpdateCourse = findViewById(R.id.btn_update_course);
         btnSelectPhoto = findViewById(R.id.btn_select_photo);
 
+        int darkGreen = ContextCompat.getColor(this, R.color.dark_green);
+
+        btnUpdateCourse.setBackgroundColor(darkGreen);
+        btnSelectPhoto.setBackgroundColor(darkGreen);
+
         db = new DatabaseHelper(this);
 
         // Get the Course ID from the Intent
@@ -46,7 +52,8 @@ public class EditCourseActivity extends AppCompatActivity {
         // Pre-fill the EditText fields with the current course information
         etCourseTitle.setText(course.getTitle());
         etCourseTopics.setText(course.getMainTopics());
-        etCoursePrerequisites.setText(course.getPrerequisites().toString());
+        String test = course.getPrerequisites().toString().replaceAll("[\\[\\]{}()]", "");
+        etCoursePrerequisites.setText(test);
 
         // Display the current course photo
         Bitmap bitmap = db.getCoursePhoto(course);
