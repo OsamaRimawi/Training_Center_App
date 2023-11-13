@@ -4,7 +4,8 @@
 
 This Android application is developed to assist a training center in managing course offerings, registrations, and the admission process. The training center specializes in providing short courses in various subjects, including Java programming, C++ programming, Python, AI, project management, and more. The application caters to three different types (roles) of users: center admin, trainee, and instructor.
 
-![385540699_7170428469655585_1440477541059375882_n](https://github.com/OsamaRimawi/Training_Center_App/assets/90480363/7876a857-2f93-4ac3-a361-1c84f087913e)
+![Untitled-1](https://github.com/OsamaRimawi/Training_Center_App/assets/90480363/87621f03-8521-4400-9084-76dcc91d2bc1)
+
 
 ## Features
 
